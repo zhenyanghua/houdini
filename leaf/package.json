@@ -1,9 +1,9 @@
 {
   "name": "houdini-leaf",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Leaf and vine background decoration",
   "main": "houdini-leaf.js",
-  "files": ["houdini-leaf.js"],
+  "files": ["houdini-leaf.js", "worklet.js", "properties.js"],
   "scripts": {
     "build": "node ./build.mjs",
     "prepublish": "npm run build"

@@ -20,7 +20,7 @@ const template = `/*
  
 ${properties}
 (() => { const worklet = \`
-${worklet}\`
+${worklet}\`;
 
 const workletBlob = URL.createObjectURL(new Blob([worklet], { type: 'application/javascript' }));
 
