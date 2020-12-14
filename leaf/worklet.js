@@ -14,14 +14,15 @@ class LeafPainter {
   }
 
   leaf(ctx, x, y, size, dir) {
+    ctx.save();
     ctx.translate(x, y);
     ctx.scale(size, size);
     ctx.beginPath();
     ctx.moveTo(dir, -0.7);
     ctx.bezierCurveTo(dir, -0.7, 0.4 * dir, -1, 0, 0);
     ctx.bezierCurveTo(0, 0, dir, 0.4, dir, -0.7);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.fill();
+    ctx.restore();
   }
 
   vine(ctx, geom, x, numLeaves, leafSize) {

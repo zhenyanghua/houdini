@@ -1,6 +1,6 @@
 {
   "name": "houdini-leaf",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Leaf and vine background decoration",
   "main": "houdini-leaf.js",
   "files": ["houdini-leaf.js", "worklet.js", "properties.js"],
