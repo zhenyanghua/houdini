@@ -19,3 +19,32 @@
   margin-bottom: 20px;
 }
 
+.one {
+  --leaf-color: brown;
+  height: 80px;
+}
+
+.two {
+  --leaf-color: darkorchid;
+  height: 120px;
+}
+
+.three {
+  --leaf-size: 32;
+  --leaf-color: steelblue;
+  height: 160px;
+}
+
+.leaf {
+  background-image: paint(leaf);
+}
+
+.box {
+  max-width: 400px;
+  margin-bottom: 20px;
+  background-color: wheat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

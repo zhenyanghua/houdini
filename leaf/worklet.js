@@ -8,8 +8,8 @@ class LeafPainter {
     const numLeaves = Math.floor(geom.height / leafSize) * 1.5;
     const x = leafSize * 2 + 1;
 
-    ctx.strokeStyle = properties.get('--leaf-color') || black;
-    ctx.fillStyle = properties.get('--leaf-color') || black;
+    ctx.strokeStyle = properties.get('--leaf-color').toString().trim() || 'black';
+    ctx.fillStyle = properties.get('--leaf-color').toString().trim() || 'black';
     this.vine(ctx, geom, x, numLeaves, leafSize);
   }
 

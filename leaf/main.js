@@ -1,5 +1,8 @@
-if ('paintWorklet' in CSS) {
-  CSS.paintWorklet.addModule('./worklet.js');
-}
+(async function () {
+  if (!('paintWorklet' in CSS)) {
+    await import("https://unpkg.com/css-paint-polyfill");
+  }
 
+  CSS.paintWorklet.addModule('./worklet.js');
+})();
 
