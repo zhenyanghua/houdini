@@ -10,6 +10,6 @@ if ('registerProperty' in CSS) {
     name: '--leaf-color',
     syntax: '<color>',
     inherits: true,
-    initialValue: 'black'
+    initialValue: '#73ce8f'
   });
 }

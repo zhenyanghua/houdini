@@ -1,8 +1,23 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .leaf {
   background-color: wheat;
 }
 
 @supports (background-image: paint(something)) {
+  body {
+    --leaf-size: 16;
+    --leaf-color: green;
+    background-image: paint(leaf);
+  }
+
   .leaf {
     --leaf-size: 16;
     --leaf-color: white;
@@ -10,7 +25,8 @@
   }
 }
 
-.demo {
+.box {
+  min-width: 300px;
   width: 100%;
   height: 100px;
   display: flex;
@@ -20,19 +36,21 @@
 }
 
 .one {
+  --leaf-size: 6;
   --leaf-color: brown;
   height: 80px;
 }
 
 .two {
+  --leaf-size: 8;
   --leaf-color: darkorchid;
   height: 120px;
 }
 
 .three {
-  --leaf-size: 32;
+  --leaf-size: 12;
   --leaf-color: steelblue;
-  height: 160px;
+  height: 260px;
 }
 
 .leaf {
