@@ -49,9 +49,9 @@ class LeafPainter {
     this.paintVine(ctx, properties, geom.height, 0, [0, 0]);
     // top
     this.paintVine(ctx, properties, geom.width, -90, [-this.width, 0]);
-    // right
+    // // right
     this.paintVine(ctx, properties, geom.height, -180, [-geom.width, -geom.height]);
-    // bottom
+    // // bottom
     this.paintVine(ctx, properties, geom.width, -270, [geom.height - this.width, -geom.width]);
   }
 
@@ -68,17 +68,27 @@ class LeafPainter {
     ctx.restore();
   }
 
-  vine(ctx, x, numLeaves, leafSize, length) {
+  vine(ctx, x, numLeaves, leafSize, length, angle) {
     ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, length);
+    ctx.moveTo(x, x + leafSize);
+    if (Math.abs(angle) === 90 || Math.abs(angle) === 270) { // top or bottom
+      ctx.quadraticCurveTo(x, x, x - leafSize, x);
+      ctx.moveTo(x, x + leafSize);
+    }
+    ctx.lineTo(x, length - x - leafSize);
+    if (angle === 0 || Math.abs(angle) === 180) { // left or right
+      ctx.quadraticCurveTo(x, length - x, x + leafSize, length - x);
+    }
     ctx.stroke();
     const gap = length / numLeaves;
     let direction = 1;
     for (let i = 0; i < numLeaves; i++) {
       const r = randomInt(gap);
-      this.leaf(ctx, x, gap * i + r, leafSize, direction);
-      direction = -direction;
+      const y = gap * i + r;
+      if (y > x && y < length - x) {
+        this.leaf(ctx, x, y, leafSize, direction);
+        direction = -direction;
+      }
     }
   }
 
@@ -92,7 +102,7 @@ class LeafPainter {
     ctx.save();
     ctx.rotate(angle * Math.PI / 180);
     ctx.translate(...origin);
-    this.vine(ctx, this.x, numLeaves, this.leafSize, length);
+    this.vine(ctx, this.x, numLeaves, this.leafSize, length, angle);
     ctx.restore();
   }
 
