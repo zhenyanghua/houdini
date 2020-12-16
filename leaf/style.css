@@ -35,18 +35,21 @@ body {
 .one {
   --leaf-size: 6;
   --leaf-color: brown;
+  --leaf-variance: around;
   height: 80px;
 }
 
 .two {
   --leaf-size: 8;
   --leaf-color: darkorchid;
+  --leaf-variance: around;
   height: 120px;
 }
 
 .three {
   --leaf-size: 12;
   --leaf-color: steelblue;
+  --leaf-variance: around;
   height: 260px;
 }
 
