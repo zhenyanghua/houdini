@@ -12,4 +12,11 @@ if ('registerProperty' in CSS) {
     inherits: true,
     initialValue: '#73ce8f'
   });
+
+  CSS.registerProperty({
+    name: '--leaf-variance',
+    syntax: 'left | around',
+    inherits: false,
+    initialValue: 'left'
+  });
 }

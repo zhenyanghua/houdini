@@ -1,7 +1,13 @@
 const randomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 
 class LeafPainter {
-  static get inputProperties() { return ['--leaf-size', '--leaf-color']; }
+  static get inputProperties() {
+    return [
+      '--leaf-size',
+      '--leaf-color',
+      '--leaf-variance'
+    ];
+  }
 
   get leafSize() {
     return this._leafSize;
@@ -19,11 +25,19 @@ class LeafPainter {
     this._leafColor = color;
   }
 
+  get leafVariance() {
+    return this._leafVariance;
+  }
+
+  set leafVariance(variance) {
+    this._leafVariance = variance;
+  }
+
   /**
    * The starting point of the vine in the canvas
    * @return {number}
    */
-  get x () {
+  get x() {
     return this.leafSize * 2;
   }
 
@@ -31,7 +45,7 @@ class LeafPainter {
    * The distance between the border the vine grow along and the other side of the vine.
    * @return {number}
    */
-  get width () {
+  get width() {
     return this.x + this.leafSize * 2;
   }
 
@@ -44,15 +58,20 @@ class LeafPainter {
    */
   paint(ctx, geom, properties) {
     this.leafSize = parseInt(properties.get('--leaf-size')) || 16;
+    this.leafColor = (properties.get('--leaf-color') || '#73ce8f').toString().trim();
+    this.leafVariance = (properties.get('--leaf-variance') || 'left').toString().trim();
 
     // left
     this.paintVine(ctx, properties, geom.height, 0, [0, 0]);
-    // top
-    this.paintVine(ctx, properties, geom.width, -90, [-this.width, 0]);
-    // // right
-    this.paintVine(ctx, properties, geom.height, -180, [-geom.width, -geom.height]);
-    // // bottom
-    this.paintVine(ctx, properties, geom.width, -270, [geom.height - this.width, -geom.width]);
+
+    if (this.leafVariance === 'around') {
+      // top
+      this.paintVine(ctx, properties, geom.width, -90, [-this.width, 0]);
+      // // right
+      this.paintVine(ctx, properties, geom.height, -180, [-geom.width, -geom.height]);
+      // // bottom
+      this.paintVine(ctx, properties, geom.width, -270, [geom.height - this.width, -geom.width]);
+    }
   }
 
 
@@ -69,14 +88,16 @@ class LeafPainter {
   }
 
   vine(ctx, x, numLeaves, leafSize, length, angle) {
+    const isAround = this.leafVariance === 'around';
+
     ctx.beginPath();
-    ctx.moveTo(x, x + leafSize);
-    if (Math.abs(angle) === 90 || Math.abs(angle) === 270) { // top or bottom
+    ctx.moveTo(x, isAround ? x + leafSize : 0);
+    if (isAround && (Math.abs(angle) === 90 || Math.abs(angle) === 270)) { // top or bottom
       ctx.quadraticCurveTo(x, x, x - leafSize, x);
       ctx.moveTo(x, x + leafSize);
     }
-    ctx.lineTo(x, length - x - leafSize);
-    if (angle === 0 || Math.abs(angle) === 180) { // left or right
+    ctx.lineTo(x, isAround ? length - x - leafSize : length);
+    if (isAround && (angle === 0 || Math.abs(angle) === 180)) { // left or right
       ctx.quadraticCurveTo(x, length - x, x + leafSize, length - x);
     }
     ctx.stroke();
@@ -85,7 +106,7 @@ class LeafPainter {
     for (let i = 0; i < numLeaves; i++) {
       const r = randomInt(gap);
       const y = gap * i + r;
-      if (y > x && y < length - x) {
+      if (!isAround || (isAround && y > x && y < length - x)) {
         this.leaf(ctx, x, y, leafSize, direction);
         direction = -direction;
       }
@@ -96,8 +117,7 @@ class LeafPainter {
   paintVine(ctx, properties, length, angle, origin) {
     const numLeaves = Math.floor(length / this.leafSize) * 1.5;
 
-    ctx.strokeStyle = properties.get('--leaf-color').toString().trim() || '#73ce8f';
-    ctx.fillStyle = properties.get('--leaf-color').toString().trim() || '#73ce8f';
+    ctx.strokeStyle = ctx.fillStyle = this.leafColor;
 
     ctx.save();
     ctx.rotate(angle * Math.PI / 180);
