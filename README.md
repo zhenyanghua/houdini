@@ -4,3 +4,4 @@ A collection of [CSS Houdini](https://developer.mozilla.org/en-US/docs/Web/Houdi
 
 ## Paint
 - [houdini-leaf](/leaf)
+- [houdini-snowflake](/snowflake)

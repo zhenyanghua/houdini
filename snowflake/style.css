@@ -1,0 +1,18 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+}
+
+#body {
+  height: 100%;
+  width: 400px;
+  background-color: #294198;
+  background-image: paint(snowflake);
+}
+
+@supports (background-image: paint(something)) {
+  #body {
+    background-image: paint(snowflake);
+  }
+}
+
